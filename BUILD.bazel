@@ -17,9 +17,5 @@ go_library(
 go_binary(
     name = "test",
     embed = [":test_lib"],
-    gc_linkopts = [
-        "-extldflags",
-        "-Wl,-z,lazy",
-    ],
     visibility = ["//visibility:public"],
 )
