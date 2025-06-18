@@ -1,0 +1,25 @@
+load("@gazelle//:def.bzl", "gazelle")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+gazelle(
+    name = "gazelle",
+    command = "fix",
+)
+
+go_library(
+    name = "test_lib",
+    srcs = ["main.go"],
+    importpath = "test",
+    visibility = ["//visibility:private"],
+    deps = ["@com_github_nvidia_go_nvml//pkg/nvml"],
+)
+
+go_binary(
+    name = "test",
+    embed = [":test_lib"],
+    gc_linkopts = [
+        "-extldflags",
+        "-Wl,-z,lazy",
+    ],
+    visibility = ["//visibility:public"],
+)
